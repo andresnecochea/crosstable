@@ -1,5 +1,5 @@
 # crosstable
-R package to format a Cross Tabulation.
+R package to format a cross tabulation.
 
 Features:
 * Produces a table with total, row and column percent.
@@ -12,7 +12,7 @@ TODO:
 * A more flexible way to format cells
 
 # Installation
-In order to install the package from github, you most be sure to have installed devtols:
+In order to install the package from github, you must be sure to have installed devtols:
 ```
 library(devtools)
 install_github("andresnecochea/crosstable", ref="main")
