@@ -13,6 +13,7 @@ TODO:
 
 # Installation
 In order to install the package from github, you most be sure to have installed devtols:
+
 library(devtools)
 install_github("andresnecochea/crosstable", ref="main")
 
