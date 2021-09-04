@@ -49,7 +49,7 @@ crosstable(..., data = parent.frame(), row.vars = NULL, col.vars = NULL, stats =
 %% ~put references to the literature/web site here ~
 }
 \author{
-Andrés Necochea VEga
+Andrés Necochea Vega
 }
 \note{
 %%  ~~further notes~~
@@ -86,7 +86,7 @@ gxp <- crosstable(gender, party, stats=c("count", "column"))
 # Perform Chi square test
 gxp_xsq <- chisq.test(gxp)
 # Add the Chisq expected values to the table
-gxp <- x <- add.tables(gxp, "expected" = gxp_xsq$expected)
+gxp <- add.tables(gxp, "expected" = gxp_xsq$expected)
 
 print(gxp)
 
