@@ -1,6 +1,6 @@
-Package: crosstable
+Package: multitabulation
 Type: Package
-Title: Crosstabulation For Categorical Data
+Title: Crosstabulation for Multiple Variables of Categorical Data
 Version: 0.0.1
 Author: Andrés Necochea Vega
 Maintainer: Andrés Necochea Vega <andres.necochea.v@gmail.com>
