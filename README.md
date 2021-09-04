@@ -1,4 +1,4 @@
-# multitabulation
+# Multitabulation
 R package to format a cross tabulation for two or more variables.
 
 Features:
