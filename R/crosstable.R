@@ -29,7 +29,7 @@ crosstable <- function(..., data=parent.frame(), row.vars = NULL, col.vars = NUL
 
   if (is.null(format)) {
     f <- stats %in% c("column","row","total")
-    format <- rep(c("#,#0.00 ","#,#0.")[as.numeric(stats.on.cols)+1], length(stats))
+    format <- rep(c("#,#0.00 ","#,#0")[as.numeric(stats.on.cols)+1], length(stats))
     format[f] <- "#,#0.00%"
   }
 
