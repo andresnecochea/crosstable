@@ -34,9 +34,7 @@ print.crosstable <- function(x) {
   s <- sweep(s, max(c(row.vars, col.vars)), 0, "+")
   s <- sort(s, index.return=TRUE)$ix
 
-  tablePrint %<>%
-    round(arguments$digits) %>%
-    sweep(max(c(row.vars, col.vars)), arguments$format, "%f%")
+  tablePrint <- sweep(tablePrint, max(c(row.vars, col.vars)), arguments$format, "%f%")
 
   #Now we sort the table using the s index
   tablePrint <- as.vector(tablePrint)[s]

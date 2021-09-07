@@ -5,7 +5,7 @@
   suffix <- sub(".*(#.?#*)?0{1}(.{1}0+)?","",f)
   sub("^.*(#.#)0.*$", "\\1", f) %>%
     gsub("#", "", .) -> big.mark
-  big.mark <- c("", big.mark)[as.numeric(grepl("^.*#.#0.*", f))+1]
+  big.mark <- c("", big.mark)[as.numeric(big.mark == "")+1]
   decimal.mark <- gsub("0", "", numFormat)
   decimal.mark <- c(getOption("OutDec"), decimal.mark)[as.numeric(grepl("^.*0.0+.*$", numFormat))+1]
   sub("(0+.?)(0*)", "\\2", numFormat) %>%
