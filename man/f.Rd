@@ -58,7 +58,7 @@ pi \%f\% "0.00"
 library(magrittr)
 m <- matrix(seq(10,90, length.out=9), ncol = 3)
 sweep(m,2,c("$0","0\%","(0)"), "\%f\%") \%>\%
-  matrix(ncol=3)
+  matrix(ncol=ncol(m))
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
