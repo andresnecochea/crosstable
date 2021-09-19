@@ -69,7 +69,7 @@ strata <- factor(strata, levels=c(1,2,3), labels=c("Low", "Middle", "High"))
 party <- sample(c(1,2), 131, replace=TRUE)
 party <- factor(party, levels=c(1,2), labels=c("Right", "Left"))
 
-# Standar two variable table
+# Standard two variable table
 # Normal table
 crosstable(gender, party)
 # add column percent

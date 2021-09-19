@@ -42,22 +42,17 @@ crosstable.ftable <- function(..., data=parent.frame(), row.vars = NULL, col.var
   f <- stats %in% c("column","row","total")
   tableNames <- stats
   tableNames[f] <- paste("% of", tableNames[f])
-  tableFormat <- rep("", length(stats))
-  tableFormat[f] <- "%"
+  tableFormat <- rep("0.00", length(stats))
+  tableFormat[f] <- "0.00%"
 
   names(tablePrint) <- tableNames
   tablePrint <- bind.tables(tablePrint)
-
-  tablePrint %>%
-    round(digits) %>%
-    format() -> tablePrint
 
   # He usado Sweep para agregar el símbolo % a las celdas de porcentaje
   # Pero por alguna razón se pierde
   dimTable <- dim(tablePrint)
   tableDimNames <- dimnames(tablePrint)
-  "%p%" <- function(x,y) paste0(x,y)
-  tablePrint <- sweep(tablePrint, length(dimTable), tableFormat, "%p%")
+  tablePrint <- sweep(tablePrint, length(dimTable), tableFormat, "%f%")
   dim(tablePrint) <- dimTable
   dimnames(tablePrint) <- tableDimNames
 

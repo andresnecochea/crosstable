@@ -36,11 +36,11 @@ print.crosstable <- function(x) {
 
   tablePrint <- sweep(tablePrint, max(c(row.vars, col.vars)), arguments$format, "%f%")
 
-  #Now we sort the table using the s index
+  # Now we sort the table using the s index
   tablePrint <- as.vector(tablePrint)[s]
   dim(tablePrint) <- dimTable
 
-  #colHeaders
+  # Define the Column Headers
   colHeaders <- tableDimNames[col.vars]
   # Table Width for columns based on the length of var labels
   tableWidth <- 0
