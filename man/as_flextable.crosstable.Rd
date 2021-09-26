@@ -4,7 +4,7 @@
 \alias{as_flextable.crosstable}
 \title{Uses flextable to print the table in html or Latex}
 \usage{
-as_flextable.crosstable(x)
+\method{as_flextable}{crosstable}(x)
 }
 \arguments{
 \item{x}{A crosstable object}

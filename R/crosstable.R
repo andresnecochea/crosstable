@@ -1,3 +1,6 @@
+#' @exportClass "crosstable"
+setClass("crosstable", contains = "table")
+
 #' Formating and Printing a Cross Tabulation
 #'
 #' Create a contingency table or crosstabulation with
@@ -60,9 +63,7 @@
 #' # The same with a Formula Method
 #' crosstable(~Type+Origin+Man.trans.avail , data=cars, col.vars=c("Origin", "Man.trans.avail"))
 #'
-#' @export "crosstable"
-#' @exportClass "crosstable"
-setClass("crosstable", contains = "table")
+#' @export
 crosstable <- function(..., data=parent.frame(), row.vars = NULL, col.vars = NULL, stats = "count", format = NULL, col.total = FALSE, row.total = FALSE, stats.on.cols = TRUE) {
   # This function will use table or xtabs to make an R table
   # can recive as arguments a couple of vectors or an already made table
