@@ -1,5 +1,6 @@
 library(multitabulation)
 library(flextable)
+library(magrittr)
 
 gender <- sample(c(1,2), 131, replace=TRUE) %>%
   factor(levels=c(1,2), labels=c("Man", "Woman"))

@@ -1,5 +1,13 @@
-# Función Crosstable, una idea para hacer tablas más legibles en R
-crosstable.ftable <- function(..., data=parent.frame(), row.vars = NULL, col.vars = NULL, stats = "count", digits = 2) {
+#' Create a contingency table with summary statistics using ftable
+#'
+#' This function will create a contingency table with summary statistics
+#' using bind.tales and ftable
+#'
+#' @examples
+#' ctftable(Freq ~ Type + Cont, stats=c("count", "row"), data=MASS::housing)
+#'
+#' @export
+ctftable <- function(..., data=parent.frame(), row.vars = NULL, col.vars = NULL, stats = "count") {
   # Se recibe como argumento filas y columnas, una tabla o una fórmula
   if (is.table(..1))
     table1 <- ..1

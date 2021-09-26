@@ -1,3 +1,14 @@
+#' Uses flextable to print the table in html or Latex
+#'
+#' @param x A crosstable object
+#' @examples
+#' library(flextable)
+#' library(magrittr)
+#'
+#' crosstable(Titanic, col.vars=c("Sex", "Survived"), stats=c("count", "column")) %>%
+#'   as_flextable
+#'
+#' @exportS3Method  flextable::as_flextable
 as_flextable.crosstable <- function(x) {
   tablePrint <- attr(x, "tablePrint")
   arguments <- attr(x, "arguments")

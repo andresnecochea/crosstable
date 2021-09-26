@@ -1,4 +1,20 @@
-# Add stat table to an existing contingency table
+#' Add stat table to an existing contingency table
+#'
+#' @param x A crosstable object
+#' @param format Character vector with the format of the stats. See help("\%f\%")
+#' @param ... A list of tables. They must have the same dimensions of the original table.
+#' @examples
+#' library(magrittr)
+#'
+#' bacteria <- MASS::bacteria
+#'
+#' tab <- xtabs(~y+trt, data=bacteria)
+#' tab_chsq <- chisq.test(tab)
+#'
+#' crosstable(tab) %>%
+#'   add.tables(format=c("0.00%", "(0.00)"), "%" = prop.table(tab)*100, "expected" = tab_chsq$expected)
+#'
+#' @export
 add.tables <- function(x, format=NULL, ...) {
   if (is.list(..1)) tables <- ..1
   else tables <- list(...)
