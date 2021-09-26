@@ -8,7 +8,8 @@
 #' crosstable(Titanic, col.vars=c("Sex", "Survived"), stats=c("count", "column")) %>%
 #'   as_flextable
 #'
-#' @export
+#' @importFrom flextable as_flextable
+#' @exportS3Method flextable::as_flextable
 as_flextable.crosstable <- function(x) {
   tablePrint <- attr(x, "tablePrint")
   arguments <- attr(x, "arguments")
