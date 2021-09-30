@@ -33,19 +33,8 @@ as_flextable.crosstable <- function(x) {
   #-------------------------#
   # MAKE THE TABLE TO PRINT #
   #-------------------------#
-  dimTable <- dim(tablePrint)
-
-  # Index of original table to make
-  s <- sapply(1:prod(dimTable[(length(dimTable)-1):length(dimTable)]),rep,prod(dimTable[-((length(dimTable)-1):length(dimTable))]))
-  dim(s) <- dimTable
-  s <- sweep(s, max(c(row.vars, col.vars)), 0, "+")
-  s <- sort(s, index.return=TRUE)$ix
-
+  # Format the table to print
   tablePrint <- sweep(tablePrint, max(c(row.vars, col.vars)), arguments$format, "%f%")
-
-  # Now we sort the table using the s index
-  tablePrint <- as.vector(tablePrint)[s]
-  dim(tablePrint) <- dimTable
 
   # Turn table in to ftable to make the data.frame
   ftable(tablePrint, col.vars = col.vars) %>%
