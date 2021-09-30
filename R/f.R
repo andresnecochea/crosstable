@@ -31,25 +31,31 @@
 #' # Make a matrix with 9 numbers
 #' # Then format the first column with a dollar sign,
 #' # second row with percent sign and thrid surounded with parenthesis.
-#' library(magrittr)
 #' m <- matrix(seq(10,90, length.out=9), ncol = 3)
-#' sweep(m,2,c("$0","0%","(0)"), "%f%") %>%
-#'   matrix(ncol=ncol(m))
+#' sweep(m,2,c("$0","0%","(0)"), "%f%")
 #'
 #' @rdname f
 #' @export
 "%f%" <- function(x,f) {
-  numFormat <- sub("^[^0]*(0+.?0*)[^0]*$", "\\1", f)
-  prefix <- sub("(#.?#*)?0{1}(.{1}0+)?.*","",f)
-  suffix <- sub(".*(#.?#*)?0{1}(.{1}0+)?","",f)
-  sub("0{1}(.{1}0+)?.*", "", f) %>%
-    sub("^[^#]*", "", .) %>%
-    gsub("#","",.) -> big.mark
-  decimal.mark <- gsub("0", "", numFormat)
-  decimal.mark <- c(getOption("OutDec"), decimal.mark)[as.numeric(grepl("^.*0.0+.*$", numFormat))+1]
-  sub("(0+.?)(0*)", "\\2", numFormat) %>%
-    nchar -> digits
-  round(x, digits) %>%
-    format(nsmall=digits ,big.mark=big.mark, decimal.mark=as.character(decimal.mark)[1]) %>%
-    paste0(prefix, ., suffix)
+  if(length(c(f)) > 1 | sum(dim(c(f))) > 1) {
+    output <- mapply(function(x,f) x %f% f, f=f, x=x)
+    dim(output) <- dim(x)
+    names(output) <- names(x)
+    dimnames(output) <- dimnames(x)
+    output
+  } else {
+    numFormat <- sub("^[^0]*(0+.?0*)[^0]*$", "\\1", f)
+    prefix <- sub("(#.?#*)?0{1}(.{1}0+)?.*","",f)
+    suffix <- sub(".*(#.?#*)?0{1}(.{1}0+)?","",f)
+    sub("0{1}(.{1}0+)?.*", "", f) %>%
+      sub("^[^#]*", "", .) %>%
+      gsub("#","",.) -> big.mark
+    decimal.mark <- gsub("0", "", numFormat)
+    decimal.mark <- c(getOption("OutDec"), decimal.mark)[as.numeric(grepl("^.*0.0+.*$", numFormat))+1]
+    sub("(0+.?)(0*)", "\\2", numFormat) %>%
+      nchar -> digits
+    round(x, digits) %>%
+      format(nsmall=digits ,big.mark=big.mark, decimal.mark=decimal.mark) %>%
+      paste0(prefix, ., suffix)
+  }
 }
