@@ -57,12 +57,7 @@ ctftable <- function(..., data=parent.frame(), row.vars = NULL, col.vars = NULL,
   tablePrint <- bind.tables(tablePrint)
 
   # He usado Sweep para agregar el símbolo % a las celdas de porcentaje
-  # Pero por alguna razón se pierde
-  dimTable <- dim(tablePrint)
-  tableDimNames <- dimnames(tablePrint)
   tablePrint <- sweep(tablePrint, length(dimTable), tableFormat, "%f%")
-  dim(tablePrint) <- dimTable
-  dimnames(tablePrint) <- tableDimNames
 
   col.vars <- c(col.vars, (length(dim(table1))+1):length(dim(tablePrint)))
   ftable(tablePrint, col.vars=col.vars)
