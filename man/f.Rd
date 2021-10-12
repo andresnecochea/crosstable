@@ -40,9 +40,7 @@ pi \%f\% "0.00"
 # Make a matrix with 9 numbers
 # Then format the first column with a dollar sign,
 # second row with percent sign and thrid surounded with parenthesis.
-library(magrittr)
 m <- matrix(seq(10,90, length.out=9), ncol = 3)
-sweep(m,2,c("$0","0\%","(0)"), "\%f\%") \%>\%
-  matrix(ncol=ncol(m))
+sweep(m,2,c("$0","0\%","(0)"), "\%f\%")
 
 }

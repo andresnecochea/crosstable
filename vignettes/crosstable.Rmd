@@ -1,0 +1,98 @@
+---
+title: "Crosstable"
+author: "Andrés Necochea"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Crosstable}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Crosstable is an extension for the class table that have useful methods to print the table with percents and chisquare expected values.
+You can use as any regular table call functions like `apply`, `margin.table` and  `chisq.test`.
+
+## Basic Usage
+
+This function is designed to be used in a way that you can see the results in the console.
+
+```{r}
+library(multitabulation)
+library(magrittr)
+
+# Generate Random data
+gender <- sample(c(1,2), 131, replace=TRUE) %>%
+  factor(levels=c(1,2), labels=c("Man", "Woman"))
+strata <- sample(c(1,2,3), 131, replace=TRUE) %>%
+  factor(levels=c(1,2,3), labels=c("Low", "Middle", "High"))
+party <- sample(c(1,2), 131, replace=TRUE) %>%
+  factor(levels=c(1,2), labels=c("Right", "Left"))
+
+crosstable(strata, party, gender, stats=c("count", "row", "column", "total"))
+```
+
+## Using flextable
+
+You can use `as_flextable` to make a table ready to be printed in a report. You can combine flextable with officer in order to export the table to Ms Office.
+```{r, results='asis'}
+library(multitabulation)
+library(flextable)
+library(magrittr)
+
+crosstable(strata, party, gender, stats=c("count", "column")) %>%
+  as_flextable
+```
+
+## Performing Chi Squared Test
+
+Crosstable is basically an extension of table class, so you can use in almost the same way than a regular table, so you can perform the `chisq.test` 
+
+```{r}
+tab <- with(MASS::bacteria, crosstable(y, trt, stats=c("count", "column")))
+tabxsq <- chisq.test(tab)
+tabxsq
+```
+
+Also, you can include the expected values of `chisq.test` in the table report using `add.tables`.
+
+```{r, results='asis'}
+add.tables(tab, format="(0.00)", "(expected)" = tabxsq$expected) %>%
+  as_flextable
+```
+
+## Aditional options
+
+If you prefer the stats on rows, you can use `stats.on.cols=FALSE`
+
+```{r, results='asis'}
+crosstable(strata, party, gender, stats=c("count", "column"), stats.on.cols=FALSE) %>%
+  as_flextable
+```
+
+You can use an existing table and turn it into a `crosstable`. You can use
+`col.vars` or `row.vars`
+
+```{r, results='asis'}
+crosstable(Titanic, col.vars=c("Sex", "Survived"), stats=c("count", "column")) %>%
+  as_flextable
+```
+
+You can use `dnn` to set the names of the variables.
+```{r, results='asis'}
+with(MASS::bacteria, crosstable(y, trt, stats=c("count", "column"), dnn=c("Result", "Treatment"))) %>%
+  as_flextable
+```
+
+If you use a wheighted survey or data base, you can use the formula mode.
+
+```{r, results='asis'}
+crosstable(Freq ~ Type + Cont, stats=c("count", "row"), data=MASS::housing) %>%
+  as_flextable
+```

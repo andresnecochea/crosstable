@@ -64,7 +64,9 @@ setClass("crosstable", contains = "table")
 #' crosstable(~Type+Origin+Man.trans.avail , data=cars, col.vars=c("Origin", "Man.trans.avail"))
 #'
 #' @export
-crosstable <- function(..., data=parent.frame(), row.vars = NULL, col.vars = NULL, stats = "count", format = NULL, col.total = FALSE, row.total = FALSE, stats.on.cols = TRUE) {
+crosstable <- function(...,
+                       data=parent.frame(), row.vars = NULL, col.vars = NULL,
+                       stats = "count", format = NULL, stats.on.cols = TRUE) {
   # This function will use table or xtabs to make an R table
   # can recive as arguments a couple of vectors or an already made table
   if (is.table(..1))
