@@ -23,3 +23,5 @@ Once installed you can run the next code to find some examples:
 library(multitabulation)
 ?crosstable
 ```
+See examples in the vignette:
+https://andresnecochea.github.io/multitabulation/crosstable.html
