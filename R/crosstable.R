@@ -69,23 +69,40 @@ crosstable <- function(...,
                        stats = "count", format = NULL, stats.on.cols = TRUE) {
   # This function will use table or xtabs to make an R table
   # can recive as arguments a couple of vectors or an already made table
+
+  # Get a list of all arguments except vars
+  arguments <- c(as.list(environment()), list(...))
+  arguments <- arguments[names(arguments) != ""]
+
   if (is.table(..1))
     table1 <- ..1
-  else if (class(..1)=="formula")
+  else if (class(..1)=="formula") {
     table1 <- xtabs(..1, data=data)
-  else
+    var.names <- names(dimnames(table1))
+    if("dnn" %in% names(arguments))
+      names(dimnames(table1)) <- arguments$dnn
+  }
+  else {
     table1 <- table(...)
+    # get var.names in order to avoid conflict if dnn is set
+    if ("dnn" %in% names(arguments)) {
+      var.names <- as.list(substitute(list(...)))[-1L]
+      var.names <- as.character(var.names[names(var.names)==""])
+    } else {
+      var.names <- names(dimnames(table1))
+    }
+  }
 
   # We should build the arguments col.vars or row.vars if not defined
   if(xor(is.null(col.vars), is.null(row.vars))) {
     if (is.null(row.vars)) {
       if (is.character(col.vars))
-        col.vars <- which(names(dimnames(table1)) %in% col.vars)
+        col.vars <- which(var.names %in% col.vars)
       row.vars <- 1:length(dim(table1))
       row.vars <- row.vars[-col.vars]
     } else if (is.null(col.vars)) {
       if (is.character(row.vars))
-        row.vars <- which(names(dimnames(table1)) %in% row.vars)
+        row.vars <- which(var.names %in% row.vars)
       col.vars <- 1:length(dim(table1))
       col.vars <- col.vars[-row.vars]
     }
@@ -93,12 +110,15 @@ crosstable <- function(...,
     col.vars <- length(dim(table1))
     row.vars <- 1:(length(dim(table1))-1)
   }
+  arguments$col.vars <- col.vars
+  arguments$row.vars <- row.vars
 
   if (is.null(format)) {
     f <- stats %in% c("column","row","total")
     format <- rep(c("#,#0.00 ","#,#0")[as.numeric(stats.on.cols)+1], length(stats))
     format[f] <- "#,#0.00%"
   }
+  arguments$format <- format
 
   # The table to print will be a list of tables made with prop.table
   # the main table is frequency other tables are percentajes
@@ -125,6 +145,7 @@ crosstable <- function(...,
   # The tablePrint is an attribute only to show.
   structure(table1,
             tablePrint = tablePrint,
-            arguments = list(row.vars = row.vars, col.vars = col.vars, stats = stats, format = format, stats.on.cols = stats.on.cols),
+            arguments = arguments,
+            #arguments = list(row.vars = row.vars, col.vars = col.vars, stats = stats, format = format, stats.on.cols = stats.on.cols),
             class="crosstable")
 }

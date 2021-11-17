@@ -11,8 +11,6 @@ crosstable(
   col.vars = NULL,
   stats = "count",
   format = NULL,
-  col.total = FALSE,
-  row.total = FALSE,
   stats.on.cols = TRUE
 )
 }
