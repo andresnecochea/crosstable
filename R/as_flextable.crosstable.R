@@ -9,7 +9,8 @@
 #'   as_flextable
 #'
 #' @importFrom flextable as_flextable
-#' @exportS3Method flextable::as_flextable
+#' @method as_flextable crosstable
+#' @export
 as_flextable.crosstable <- function(x) {
   tablePrint <- attr(x, "tablePrint")
   arguments <- attr(x, "arguments")

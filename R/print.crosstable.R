@@ -1,5 +1,6 @@
 #' S3 method to print a crosstable
-#' @exportS3Method base::print
+#' @method print crosstable
+#' @export
 print.crosstable <- function(x) {
   invisible(x)
   #-------------------#
